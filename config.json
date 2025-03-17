@@ -1,0 +1,72 @@
+{
+    "database_name": "name_the_DB",
+    "tables": [
+        {
+            "name": "Drugs",
+            "columns": [
+                {"name": "DrugID", "type": "INT", "options": "AUTO_INCREMENT PRIMARY KEY"},
+                {"name": "DrugName", "type": "VARCHAR(255)", "options": "NOT NULL"}
+            ]
+        },
+        {
+            "name": "DrugArchives",
+            "columns": [
+                {"name": "DrugID", "type": "INT", "options": "NOT NULL"},
+                {"name": "DrugPicture", "type": "VARCHAR(255)", "options": "NULL"},
+                {"name": "FOREIGN KEY (DrugID)", "type": "REFERENCES Drugs(DrugID)"}
+            ]
+        },
+        {
+            "name": "Patients",
+            "columns": [
+                {"name": "PatientID", "type": "INT", "options": "AUTO_INCREMENT PRIMARY KEY"},
+                {"name": "PatientName", "type": "VARCHAR(255)", "options": "NOT NULL"},
+                {"name": "PatientPicture", "type": "VARCHAR(255)", "options": "NULL"}
+            ]
+        },
+        {
+            "name": "Accounts",
+            "columns": [
+                {"name": "CenterID", "type": "INT", "options": "AUTO_INCREMENT PRIMARY KEY"},
+                {"name": "CenterName", "type": "VARCHAR(255)", "options": "NOT NULL"},
+                {"name": "CenterAccount", "type": "VARCHAR(255)", "options": "NOT NULL"},
+                {"name": "CenterPassword", "type": "VARCHAR(255)", "options": "NOT NULL"}
+            ]
+        },
+        {
+            "name": "Employees",
+            "columns": [
+                {"name": "EmployeeID", "type": "INT", "options": "AUTO_INCREMENT PRIMARY KEY"},
+                {"name": "EmployeeName", "type": "VARCHAR(255)", "options": "NOT NULL"},
+                {"name": "EmployeePicture", "type": "VARCHAR(255)", "options": "NULL"},
+                {"name": "CenterID", "type": "INT", "options": "NULL"},
+                {"name": "FOREIGN KEY (CenterID)", "type": "REFERENCES Accounts(CenterID)"}
+            ]
+        },
+        {
+            "name": "Records",
+            "columns": [
+                {"name": "EmployeeID", "type": "INT", "options": "NOT NULL"},
+                {"name": "PatientID", "type": "INT", "options": "NOT NULL"},
+                {"name": "Timing", "type": "VARCHAR(10)", "options": "NOT NULL"},
+                {"name": "EntryDatetime", "type": "DATETIME", "options": "NOT NULL"},
+                {"name": "PRIMARY KEY (PatientID, Timing, EntryDatetime)", "type": ""},
+                {"name": "FOREIGN KEY (EmployeeID)", "type": "REFERENCES Employees(EmployeeID)"},
+                {"name": "FOREIGN KEY (PatientID)", "type": "REFERENCES Patients(PatientID)"},
+                {"name": "FOREIGN KEY (PatientID, Timing)", "type": "REFERENCES Medications(PatientID, Timing)"}
+            ]
+        },
+        {
+            "name": "Medications",
+            "columns": [
+                {"name": "PatientID", "type": "INT", "options": "NOT NULL"},
+                {"name": "DrugID", "type": "INT", "options": "NOT NULL"},
+                {"name": "Timing", "type": "VARCHAR(10)", "options": "NOT NULL"},
+                {"name": "Dose", "type": "FLOAT", "options": "NOT NULL"},
+                {"name": "PRIMARY KEY (PatientID, Timing, DrugID)", "type": ""},
+                {"name": "FOREIGN KEY (PatientID)", "type": "REFERENCES Patients(PatientID)"},
+                {"name": "FOREIGN KEY (DrugID)", "type": "REFERENCES Drugs(DrugID)"}
+            ]
+        }
+    ]
+}
